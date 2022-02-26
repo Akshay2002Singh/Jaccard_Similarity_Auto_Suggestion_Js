@@ -87,7 +87,7 @@ function sum_logical_or(x, y) {
 }
 
 // js object that save similarities between given user and other users
-similarities = {}
+let similarities = {}
 for (user in user_data) {
     similarities[user] = sum_logical_and(user_data[user], new_user) / sum_logical_or(user_data[user], new_user)
 }
@@ -95,4 +95,25 @@ for (user in user_data) {
 // printing valuse obtained
 for (user in similarities) {
     console.log(`${user} = ${similarities[user]}`)
+}
+
+// if our database is small then we will sort and then show top users
+// otherwise
+// if we need to show top 10 user as recomendation then we will just find top 10 valuse
+
+console.log("\n\n Recommended Users \n\n");
+
+var recommended_user = []
+
+for(let i =0;i<10;++i){
+    var max=0;
+    var user_to_delete = "";
+    for(user in similarities){
+        if(max<similarities[user]){
+            max=similarities[user];
+            user_to_delete = user;
+        }
+    }
+    console.log(`${user_to_delete} = ${max}`);
+    delete similarities[user_to_delete];
 }
